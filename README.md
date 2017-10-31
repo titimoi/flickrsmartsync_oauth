@@ -7,7 +7,8 @@ Upload, download or sync photos and videos to flickr.
 Download flickrsmartsync_oauth:
 
 ```sh
-> git clone https://github.com/inspector2211/flickrsmartsync_oauth
+> pip install git+https://github.com/titimoi/flickrsmartsync_oauth
+> pip install flickrapi
 ```
 
 Create your own personal Flickr API keys:
@@ -28,7 +29,12 @@ Run the install script:
 
 ## Example Usage
 
-Upload all photos and vidoes in current folder and all sub-folders:
+Authenticate manually and upload all photos and vidoes in current folder and all sub-folders:
+```sh
+> flickrsmartsync_oauth --manual-auth
+```
+
+Upload all photos and vidoes in current folder and all sub-folders once authenticated at least once before :
 ```sh
 > flickrsmartsync_oauth
 ```
