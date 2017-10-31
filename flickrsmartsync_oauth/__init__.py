@@ -39,6 +39,7 @@ def main():
     parser.add_argument('--custom-set-debug',       action='store_true',            help='When testing custom sets: ask for confirmation before creating an album.')
     parser.add_argument('--username',                                   type=str,   help='Token username argument for API.')
     parser.add_argument('--keyword',                action='append',    type=str,   help='Only upload files matching this keyword.')
+    parser.add_argument('--manual-auth',            action='store_true',            help='authenticate in a different computer by browsing to an url and entering the returned code manually')
 
     args = parser.parse_args()
 
