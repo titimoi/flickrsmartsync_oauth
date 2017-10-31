@@ -11,7 +11,7 @@ import config
 logger = logging.getLogger("flickrsmartsync_oauth")
 
 # number of retries for downloads
-RETRIES = 10
+RETRIES = 5
 
 class Remote(object):
 
@@ -34,30 +34,24 @@ class Remote(object):
 	#
         self.api = flickrapi.FlickrAPI(config.api_key, config.api_secret)
 
-        # Authentication
-        if not self.api.token_valid(perms=u'delete'):
-            print('Authenticating...')
-        try:
+        if self.cmd_args.manual_auth:
+            self.manual_auth()
+        else:
             self.api.authenticate_via_browser(perms=u'delete')
-            """
-            # Get a request token
-            # self.api.get_request_token(oauth_callback='oob')
-            self.api.get_request_token()
 
-            # Open a browser at the authentication URL.
+        # Manual authentication from a different computer
+    def manual_auth(self):
+    # Only if the token is not valid
+        if not self.api.token_valid(perms=u'delete'):
+            self.api.get_request_token(oauth_callback='oob')
             authorize_url = self.api.auth_url(perms=u'delete')
-            webbrowser.open_new_tab(authorize_url)
-
-            # Get the verifier code from the user.
-            verifier = str(input('Please enter verfication code: '))
+            logger.info('url for authentication: %s' % authorize_url)
+            # Get the verifier code from the user. Do this however you
+            # want, as long as the user gives the application the code.
+            verifier = str(input('Verifier code: '))
 
             # Trade the request token for an access token
-            # added unicode()
             self.api.get_access_token(unicode(verifier))
-            """
-        except:
-            logger.error('Authentication is required.')
-            exit(0)
 
     # Custom set builder
     def get_custom_set_title(self, path):
